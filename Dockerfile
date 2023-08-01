@@ -8,7 +8,7 @@ ENV KUBE_VERSION=v1.24.15
 WORKDIR /home/workspace
 
 RUN yum update -y && yum install -y \
-  curl vim net-tools git wget && \
+  curl vim net-tools git wget bash-completion && \
   yum clean all
 
 RUN git config --global user.name "${GIT_USER}" && \
@@ -28,4 +28,5 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
 
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x kubectl && \
-  mv ./kubectl /usr/local/bin/
+  mv ./kubectl /usr/local/bin/ && \
+  echo 'source <(kubectl completion bash)' >>  ~/.bashrc

@@ -9,7 +9,7 @@ WORKDIR /home/workspace
 
 RUN yum update -y && yum install -y \
   curl vim net-tools git wget && \
-  yum clean all &&\
+  yum clean all
 
 RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \

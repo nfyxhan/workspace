@@ -15,7 +15,9 @@ RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
 
-RUN git clone https://github.com/nfyxhan/vim.git && ln -sf `pwd`/vim ~/.vim
+RUN git clone https://github.com/nfyxhan/vim.git && \
+  ln -sf `pwd`/vim ~/.vim && \
+  vim +PlugClean[!] +PlugUpdate +qa
 
 RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \

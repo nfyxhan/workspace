@@ -14,34 +14,16 @@ WORKDIR /home/workspace
 RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y \
-    curl net-tools git wget bash-completion \
+    curl vim net-tools git wget bash-completion \
     make gcc \
-    ncurses-devel ruby ruby-devel lua lua-devel perl perl-devel python3 python3-devel python2-devel perl-ExtUtils-Embed lrzsz cmake gcc-c++ unzi && \
+    && \
+  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
+  yum update -y && \
   yum clean all
 
 RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
-
-RUN git clone https://github.com/vim/vim && \
-  cd vim && \
-  ./configure --with-features=huge \
-            --enable-rubyinterp=yes \
-            --enable-luainterp=yes \
-            --enable-perlinterp=yes \
-            --enable-python3interp=yes \
-            --enable-pythoninterp=yes \
-            --with-python-config-dir=/usr/lib64/python2.7/config \
-            --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu \
-            --enable-fontset=yes \
-            --enable-cscope=yes \
-            --enable-multibyte \
-            --disable-gui \
-            --enable-fail-if-missing \
-            --prefix=/usr/local \
-            --with-compiledby='Professional operations' && \
-  make VIMRUNTIMEDIR=/usr/local/share/vim/vim82 && make install && \
-  cd .. && rm -rf vim
   
 RUN  rm -rf ~/.vim && \
   git clone https://github.com/nfyxhan/vim.git && \

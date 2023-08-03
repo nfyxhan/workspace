@@ -41,7 +41,9 @@ RUN git clone https://github.com/vim/vim && \
             --prefix=/usr/local \
             --with-compiledby='Professional operations' && \
   make VIMRUNTIMEDIR=/usr/local/share/vim/vim82 && make install && \
-  cd .. && rm -rf vim && \
+  cd .. && rm -rf vim
+  
+RUN  rm -rf ~/.vim && \
   git clone https://github.com/nfyxhan/vim.git && \
   mv vim ~/.vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \

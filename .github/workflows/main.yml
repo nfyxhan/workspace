@@ -4,7 +4,6 @@ env:
   REGISTRY: ${{ vars.REGISTRY }} 
   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-  FULL_IMAGE: ${{ vars.REGISTRY }}/workspace:v${{ github.sha[7] }}
 
 on:
   push:
@@ -30,4 +29,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.FULL_IMAGE }}
+        tags: ${{ vars.REGISTRY }}/workspace:v${{ github.sha }}

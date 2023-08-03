@@ -2,7 +2,11 @@ FROM centos:7
 
 ENV GIT_USER=nfyxhan
 ENV GIT_EMAIL=nfyxhan@163.com
+
 ENV GO_VERSION=1.18.10
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.cn
+
 ENV KUBE_VERSION=v1.24.15
 
 WORKDIR /home/workspace

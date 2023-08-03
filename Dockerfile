@@ -9,6 +9,7 @@ WORKDIR /home/workspace
 
 RUN yum update -y && yum install -y \
   curl vim net-tools git wget bash-completion && \
+  make && \
   yum clean all
 
 RUN git config --global user.name "${GIT_USER}" && \
@@ -16,7 +17,7 @@ RUN git config --global user.name "${GIT_USER}" && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
 
 RUN git clone https://github.com/nfyxhan/vim.git && \
-  ln -sf `pwd`/vim ~/.vim && \
+  mv vim ~/.vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \
   echo "alias vi='vim '" >>  ~/.bashrc
 

@@ -35,8 +35,9 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
-    echo 'export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin' >>  ~/.bashrc
-RUN go install golang.org/x/tools/cmd/goimports@v0.11.1
+    echo 'export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin' >>  ~/.bashrc && \
+    source ~/.bashrc && \
+    go install golang.org/x/tools/cmd/goimports@v0.11.1
 
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x kubectl && \

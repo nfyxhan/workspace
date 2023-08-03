@@ -4,7 +4,7 @@ env:
   REGISTRY: ${{ vars.REGISTRY }} 
   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-  FULL_IMAGE: ${{ vars.REGISTRY }}/workspace:v${{ github.sha }}
+  FULL_IMAGE: ${{ vars.REGISTRY }}/workspace:v${{ github.sha[0:7] }}
 
 on:
   push:

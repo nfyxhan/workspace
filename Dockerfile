@@ -14,7 +14,7 @@ WORKDIR /home/workspace
 RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y \
-    curl vim net-tools git wget bash-completion \
+    curl net-tools git wget bash-completion \
     make gcc \
     ncurses-devel ruby ruby-devel lua lua-devel perl perl-devel python3 python3-devel python2-devel perl-ExtUtils-Embed lrzsz cmake gcc-c++ unzi && \
   yum clean all

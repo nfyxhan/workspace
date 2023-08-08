@@ -11,6 +11,7 @@ ENV KUBE_VERSION=v1.24.15
 
 WORKDIR /home/workspace
 
+# install base tools
 RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y \
@@ -21,16 +22,29 @@ RUN yum update -y && \
   yum update -y && \
   yum clean all
 
+# install glibc
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/glibc-2.18.tar.gz && \
+  tar -zxvf  glibc-2.18.tar.gz && \
+  cd glibc-2.18 && \
+  mkdir build && \
+  cd build/ && \
+  ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
+  make -j 8 && \
+  make install
+
+# config git
 RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
-  
+
+# config vim 
 RUN  rm -rf ~/.vim && \
   git clone https://github.com/nfyxhan/vim.git && \
   mv vim ~/.vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \
   echo "alias vi='vim '" >>  ~/.bashrc
 
+# install go
 RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
@@ -40,6 +54,7 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
     go install golang.org/x/tools/gopls@v0.11.0
 
+# install kubectl
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x kubectl && \
   mv ./kubectl /usr/local/bin/ && \

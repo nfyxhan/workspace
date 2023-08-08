@@ -7,6 +7,8 @@ ENV GO_VERSION=1.18.10
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
 
+ENV GLBC_VERSION=glibc-2.18
+
 ENV KUBE_VERSION=v1.24.15
 
 WORKDIR /home/workspace
@@ -23,14 +25,15 @@ RUN yum update -y && \
   yum clean all
 
 # install glibc
-RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/glibc-2.18.tar.gz && \
-  tar -zxvf  glibc-2.18.tar.gz && \
-  cd glibc-2.18 && \
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \
+  tar -zxvf  ${GLBC_VERSION}.tar.gz && \
+  cd ${GLBC_VERSION} && \
   mkdir build && \
   cd build/ && \
   ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
   make -j 8 && \
-  make install
+  make install && \
+  cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
 
 # config git
 RUN git config --global user.name "${GIT_USER}" && \

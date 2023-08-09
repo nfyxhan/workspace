@@ -62,3 +62,6 @@ RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64
   chmod +x kubectl && \
   mv ./kubectl /usr/local/bin/ && \
   echo 'source <(kubectl completion bash)' >>  ~/.bashrc
+
+# install code-server
+RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm

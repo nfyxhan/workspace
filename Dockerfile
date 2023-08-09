@@ -5,7 +5,7 @@ ENV GIT_EMAIL=nfyxhan@163.com
 
 ENV GO_VERSION=1.18.10
 ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.cn
+ENV GOPROXY=https://goproxy.io
 
 ENV GLBC_VERSION=glibc-2.18
 
@@ -45,7 +45,11 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     source ~/.bashrc && \
     go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
     go install golang.org/x/tools/gopls@v0.11.0 && \
-    go install -v github.com/go-delve/delve/cmd/dlv@v1.21.0
+    go install github.com/go-delve/delve/cmd/dlv@v1.21.0 && \
+    go install github.com/swaggo/swag/cmd/swag@v1.8.9 && \
+    go install github.com/golang/mock/mockgen@v1.6.0 && \
+    go install golang.org/x/tools/cmd/stringer@v0.3.0 && \
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1
 
 # install kubectl
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \

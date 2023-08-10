@@ -70,3 +70,5 @@ RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz &
   make -j 8 && \
   make install && \
   cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
+
+ADD ./hack ./hack

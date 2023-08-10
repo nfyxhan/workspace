@@ -5,7 +5,7 @@ ENV GIT_EMAIL=nfyxhan@163.com
 
 ENV GO_VERSION=1.18.10
 ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.cn
+ENV GOPROXY=https://goproxy.io
 
 ENV GLBC_VERSION=glibc-2.18
 

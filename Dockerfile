@@ -16,8 +16,9 @@ WORKDIR /home/workspace
 # install base tools
 RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
+  yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y && \
   yum install -y \
-    curl vim net-tools git wget bash-completion \
+    curl vim net-tools git wget bash-completion jq \
     make gcc \
     && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \

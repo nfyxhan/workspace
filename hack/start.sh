@@ -9,5 +9,12 @@ function start_workspace() {
 
 function start_code_server() {
     password=`uuidgen`
-    code-server --bind-addr ${addr}:${port} --password ${password}
+    code-server --bind-addr ${addr}:${port} /data/src
+}
+
+function install_go_tools() {
+    go install github.com/swaggo/swag/cmd/swag@v1.8.9
+    go install github.com/golang/mock/mockgen@v1.6.0
+    go install golang.org/x/tools/cmd/stringer@v0.3.0
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1
 }

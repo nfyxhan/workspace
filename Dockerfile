@@ -61,15 +61,15 @@ RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64
 # install code-server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm
 
-# install glibc
-RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \
-  tar -zxvf  ${GLBC_VERSION}.tar.gz && \
-  cd ${GLBC_VERSION} && \
-  mkdir build && \
-  cd build/ && \
-  ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
-  make -j 8 && \
-  make install && \
-  cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
+# # install glibc
+# RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \
+#   tar -zxvf  ${GLBC_VERSION}.tar.gz && \
+#   cd ${GLBC_VERSION} && \
+#   mkdir build && \
+#   cd build/ && \
+#   ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
+#   make -j 8 && \
+#   make install && \
+#   cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
 
 ADD ./hack ./hack

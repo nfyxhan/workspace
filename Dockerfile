@@ -42,7 +42,7 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
-    echo 'export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin' >>  ~/.bashrc && \
+    echo 'export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin:/data/bin' >>  ~/.bashrc && \
     source ~/.bashrc && \
     go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
     go install golang.org/x/tools/gopls@v0.11.0 && \

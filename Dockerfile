@@ -28,6 +28,7 @@ RUN yum update -y && \
 # config git
 RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
+  echo 'export LESSCHARSET=utf-8' >> ~/.bashrc && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
 
 # config vim 

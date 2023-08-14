@@ -52,7 +52,7 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     go install github.com/golang/mock/mockgen@v1.6.0 && \
     go install golang.org/x/tools/cmd/stringer@v0.3.0 && \
     go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && \
-    rm -rf /root/go/pkg
+    rm -rf ${HOME}/go/pkg ${HOME}/.cache/go-build
 
 # install kubectl
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \

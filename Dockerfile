@@ -43,7 +43,7 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
-    echo 'export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin:/data/bin' >>  ~/.bashrc && \
+    echo 'export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin:${HOME}/go/bin:/data/bin' >>  ~/.bashrc && \
     source ~/.bashrc && \
     go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
     go install golang.org/x/tools/gopls@v0.11.0 && \
@@ -51,7 +51,8 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     go install github.com/swaggo/swag/cmd/swag@v1.8.9 && \
     go install github.com/golang/mock/mockgen@v1.6.0 && \
     go install golang.org/x/tools/cmd/stringer@v0.3.0 && \
-    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && \
+    rm -rf /root/go/pkg
 
 # install kubectl
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \

@@ -21,6 +21,7 @@ RUN yum update -y && \
     curl vim net-tools git wget bash-completion jq \
     make gcc \
     nginx \
+    openssh-server \
     && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   yum update -y && \

@@ -10,6 +10,7 @@ ENV GOPROXY=https://goproxy.cn
 ENV GLBC_VERSION=glibc-2.18
 
 ENV KUBE_VERSION=v1.24.15
+ENV HELM_VERSION=v3.6.3
 
 WORKDIR /home/workspace
 
@@ -61,6 +62,13 @@ RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64
   chmod +x kubectl && \
   mv ./kubectl /usr/local/bin/ && \
   echo 'source <(kubectl completion bash)' >>  ~/.bashrc
+
+# install helm
+RUN wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
+  tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
+  mv linux-amd64/helm /user/local/bin/helm && \
+  echo 'source <(helm completion bash)' >>  ~/.bashrc
+  rm -rf linux-amd64 helm-${HELM_VERSION}-linux-amd64.tar.gz
 
 # install code-server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm

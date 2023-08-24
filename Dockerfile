@@ -66,7 +66,7 @@ RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64
 # install helm
 RUN wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
   tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
-  mv linux-amd64/helm /user/local/bin/helm && \
+  mv linux-amd64/helm /usr/local/bin/helm && \
   echo 'source <(helm completion bash)' >>  ~/.bashrc && \
   rm -rf linux-amd64 helm-${HELM_VERSION}-linux-amd64.tar.gz
 

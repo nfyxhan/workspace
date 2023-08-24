@@ -20,7 +20,7 @@ RUN yum update -y && \
   yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y && \
   yum install -y \
     curl vim net-tools git wget bash-completion jq \
-    make gcc \
+    make gcc graphviz \
     nginx \
     openssh-server \
     && \

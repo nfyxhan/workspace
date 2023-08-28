@@ -1,5 +1,7 @@
 FROM centos:7
 
+ENV LANG=zh_CN.utf8
+
 ENV GIT_USER=nfyxhan
 ENV GIT_EMAIL=nfyxhan@163.com
 
@@ -24,6 +26,14 @@ RUN yum update -y && \
     nginx \
     openssh-server \
     && \
+  ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+  echo "Asia/Shanghai" > /etc/timezone && \
+  wget https://raw.githubusercontent.com/adobe-fonts/source-han-sans/release/OTF/SimplifiedChinese/SourceHanSansSC-Light.otf && \
+    mkdir -p /usr/share/fonts/chinese/ && \
+    mv SourceHanSansSC-Light.otf /usr/share/fonts/chinese/SourceHanSansSC-Light.otf && \
+    fc-cache -fv && \
+    localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
+    locale && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   yum update -y && \
   yum clean all

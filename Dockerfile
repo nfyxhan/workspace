@@ -83,7 +83,7 @@ RUN wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
 # install code-server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
     all='golang.go \
-    eamodio.gitlens \
+    mhutchie.git-graph \
     alphabotsec.vscode-eclipse-keybindings \
     vscodevim.vim' ; \
     for i in $all ; do code-server --install-extension $i ; done

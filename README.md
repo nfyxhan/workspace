@@ -1,3 +1,5 @@
+![workflow](https://github.com/nfyxhan/workspace/actions/workflows/main.yml/badge.svg)  
+
 A docker image which has such tools:
 - code-server (use vscode on web)
 - golang 

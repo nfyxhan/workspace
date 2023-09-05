@@ -13,6 +13,7 @@ ENV GLBC_VERSION=glibc-2.18
 
 ENV KUBE_VERSION=v1.24.15
 ENV HELM_VERSION=v3.6.3
+ENV NODEJS_VERSION=v14.21.3
 
 WORKDIR /home/workspace
 
@@ -87,6 +88,12 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     alphabotsec.vscode-eclipse-keybindings \
     vscodevim.vim' ; \
     for i in $all ; do code-server --install-extension $i ; done
+
+RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz && \
+  tar -xvf node-${NODEJS_VERSION}-linux-x64.tar.gz && \
+  mv node-${NODEJS_VERSION}-linux-x64 /usr/local/nodejs && \
+  echo 'export PATH=$PATH:/usr/local/nodejs/bin' >>  ~/.bashrc && \
+  rm -rf node-${NODEJS_VERSION}-linux-x64.tar.gz
 
 # # install glibc
 # RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \

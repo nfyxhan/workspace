@@ -14,6 +14,7 @@ ENV GLBC_VERSION=glibc-2.18
 ENV KUBE_VERSION=v1.24.15
 ENV HELM_VERSION=v3.6.3
 ENV NODEJS_VERSION=v14.21.3
+ENV BASH_RC=~/.bashrc
 
 WORKDIR /home/workspace
 
@@ -42,7 +43,7 @@ RUN yum update -y && \
 # config git
 RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
-  echo 'export LESSCHARSET=utf-8' >> ~/.bashrc && \
+  echo 'export LESSCHARSET=utf-8' >> ${BASH_RC} && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
 
 # config vim 
@@ -50,15 +51,15 @@ RUN  rm -rf ~/.vim && \
   git clone https://github.com/nfyxhan/vim.git && \
   mv vim ~/.vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \
-  echo "alias vi='vim '" >>  ~/.bashrc
+  echo "alias vi='vim '" >>  ${BASH_RC}
 
 # install go
 RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
-    echo 'export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin:${HOME}/go/bin:/data/bin' >>  ~/.bashrc && \
-    source ~/.bashrc && \
+    echo 'export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin:${HOME}/go/bin:/data/bin' >>  ${BASH_RC} && \
+    source ${BASH_RC} && \
     go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
     go install golang.org/x/tools/gopls@v0.11.0 && \
     go install github.com/go-delve/delve/cmd/dlv@v1.21.0 && \
@@ -72,13 +73,13 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x kubectl && \
   mv ./kubectl /usr/local/bin/ && \
-  echo 'source <(kubectl completion bash)' >>  ~/.bashrc
+  echo 'source <(kubectl completion bash)' >>  ${BASH_RC}
 
 # install helm
 RUN wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
   tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
   mv linux-amd64/helm /usr/local/bin/helm && \
-  echo 'source <(helm completion bash)' >>  ~/.bashrc && \
+  echo 'source <(helm completion bash)' >>  ${BASH_RC} && \
   rm -rf linux-amd64 helm-${HELM_VERSION}-linux-amd64.tar.gz
 
 # install code-server
@@ -92,8 +93,8 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
 RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz && \
   tar -xvf node-${NODEJS_VERSION}-linux-x64.tar.gz && \
   mv node-${NODEJS_VERSION}-linux-x64 /usr/local/nodejs && \
-  echo 'export PATH=$PATH:/usr/local/nodejs/bin' >>  ~/.bashrc && \
-  rm -rf node-${NODEJS_VERSION}-linux-x64.tar.gz
+  echo 'export PATH=$PATH:/usr/local/nodejs/bin' >>  ${BASH_RC} && \
+  rm -rf node-${NODEJS_VERSION}-linux-x64.tar.gz 
 
 # # install glibc
 # RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \

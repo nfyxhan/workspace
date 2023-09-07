@@ -14,6 +14,7 @@ ENV GLBC_VERSION=glibc-2.18
 ENV KUBE_VERSION=v1.24.15
 ENV HELM_VERSION=v3.6.3
 ENV NODEJS_VERSION=v14.21.3
+ENV CHROME_DRIVER_VERSION=114.0.5735.90
 ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
@@ -23,22 +24,27 @@ RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y && \
   yum install -y \
-    curl vim net-tools git wget bash-completion jq \
+    curl vim net-tools git wget bash-completion jq unzip \
     make gcc graphviz \
-    nginx \
-    openssh-server \
+    nginx openssh-server \
+    epel-release \
     && \
+  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
+  yum update -y && \
+  yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
+    wget https://registry.npmmirror.com/-/binary/chromedriver/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip && \   
+    unzip chromedriver_linux64.zip && \
+    mv chromedriver /usr/bin/chromedriver && \
+    rm -f chromedriver_linux64.zip && \
+  yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-  echo "Asia/Shanghai" > /etc/timezone && \
+    echo "Asia/Shanghai" > /etc/timezone && \
   wget https://raw.githubusercontent.com/adobe-fonts/source-han-sans/release/OTF/SimplifiedChinese/SourceHanSansSC-Light.otf && \
     mkdir -p /usr/share/fonts/chinese/ && \
     mv SourceHanSansSC-Light.otf /usr/share/fonts/chinese/SourceHanSansSC-Light.otf && \
     fc-cache -fv && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
-    locale && \
-  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
-  yum update -y && \
-  yum clean all
+    locale
 
 # config git
 RUN git config --global user.name "${GIT_USER}" && \

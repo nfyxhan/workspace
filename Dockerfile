@@ -108,3 +108,5 @@ RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VER
 #   make -j 8 && \
 #   make install && \
 #   cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
+
+ADD ./hack ./hack

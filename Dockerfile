@@ -25,6 +25,7 @@ RUN yum update -y && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig \
     make gcc \
+    graphviz \
     && \
   yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
@@ -57,9 +58,7 @@ RUN yum install -y vim && \
   echo "alias vi='vim '" >>  ${BASH_RC}
 
 # install go
-RUN yum install -y graphviz \
-  yum clean all && \
-  wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
@@ -121,3 +120,5 @@ RUN yum install -y chromedriver && \
 #   cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
 
 ADD ./hack ./hack
+
+ADD ./Dockerfile ./Dockerfile

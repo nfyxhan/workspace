@@ -23,7 +23,7 @@ WORKDIR /home/workspace
 RUN yum update -y && \
   yum install -y epel-release && \
   yum install -y \
-    curl net-tools wget bash-completion jq unzip \
+    curl net-tools wget bash-completion jq unzip fontconfig \
     make gcc \
     && \
   yum clean all && \

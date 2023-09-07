@@ -5,6 +5,7 @@ env:
   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
   REGISTRY: ${{ vars.REGISTRY }}
   FULL_IMAGE: ${{ vars.REGISTRY }}/${{ github.repository }}:v${{ github.sha }}
+  CACHE_IMAGE: ${{ vars.REGISTRY }}/${{ github.repository }}:cache
 
 on:
   push:
@@ -26,10 +27,12 @@ jobs:
         password: ${{ env.REGISTRY_PASSWORD }}
     - name: Build and push
       id: docker_build
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v4
       with:
         context: .
         push: true
         tags: ${{ env.FULL_IMAGE }}
+        cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
+        cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
       env: 
         FULL_IMAGE: ${{ env.FULL_IMAGE }}

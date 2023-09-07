@@ -94,7 +94,7 @@ function install_helm() {
   rm -rf linux-amd64 helm-${HELM_VERSION}-linux-amd64.tar.gz
 }
 
-function install_code-server() {
+function install_code_server() {
     rpm -i https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-amd64.rpm
     all='golang.go \
     mhutchie.git-graph \
@@ -134,7 +134,7 @@ install_chrome
 install_go
 install_kubectl
 install_helm
-install_code-server
+install_code_server
 install_nodejs
 #install_glibc
 clean_all

@@ -10,4 +10,4 @@ ADD ./hack ./hack
 ADD yum.repos.d/* /etc/yum.repos.d/
 ADD bin bin
 
-RUN sh install.sh
+RUN sh -x bin/install.sh

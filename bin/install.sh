@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 GIT_USER=${GIT_USER:-nfyxhan}
 GIT_EMAIL=${GIT_EMAIL:-nfyxhan@163.com}

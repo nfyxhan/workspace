@@ -127,7 +127,8 @@ function clean_all() {
     yum clean all
 }
 
-all='install_base_tools
+all='#all
+install_base_tools
 install_git2
 install_vim8
 install_chrome
@@ -137,9 +138,12 @@ install_helm
 install_code_server
 install_nodejs
 #install_glibc
-clean_all
-'
+clean_all'
 for i in $all ;do 
+   if [[ "$i" =~ "#" ]] ; then 
+     echo skip ${i}
+     continue
+   fi
    echo "$i ..."
    $i
    echo "$i done"

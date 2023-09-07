@@ -14,19 +14,24 @@ ENV GLBC_VERSION=glibc-2.18
 ENV KUBE_VERSION=v1.24.15
 ENV HELM_VERSION=v3.6.3
 ENV NODEJS_VERSION=v14.21.3
-ENV CHROME_DRIVER_VERSION=114.0.5735.90
 ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
 
 ### install_base_tools
 RUN yum update -y && \
+  yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y epel-release && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig \
     make gcc \
+    git openssh-server \
+    vim \
     graphviz \
+    nginx \
     && \
+  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
+  yum update -y && \
   yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \
@@ -37,20 +42,11 @@ RUN yum update -y && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
     locale
 
-### config_git
-RUN yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
-  yum install -y git openssh-server && \
-  yum clean all && \
-  git config --global user.name "${GIT_USER}" && \
+### config_git_vim
+RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
   echo 'export LESSCHARSET=utf-8' >> ${BASH_RC} && \
-  ssh-keygen -f ~/.ssh/id_rsa -N ''
-
-### install_vim8 
-RUN yum install -y vim && \
-  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
-  yum update -y && \
-  yum clean all && \
+  ssh-keygen -f ~/.ssh/id_rsa -N '' && \
   rm -rf ~/.vim && \
   git clone https://github.com/nfyxhan/vim.git && \
   mv vim ~/.vim && \
@@ -86,8 +82,6 @@ RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64
 
 ### install_code_server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
-  yum install -y nginx \
-  yum clean all && \
     all='golang.go \
     mhutchie.git-graph \
     alphabotsec.vscode-eclipse-keybindings \

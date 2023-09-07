@@ -1,0 +1,11 @@
+# https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo
+[copr:copr.fedorainfracloud.org:lbiaggi:vim80-ligatures]
+name=Copr repo for vim80-ligatures owned by lbiaggi
+baseurl=https://download.copr.fedorainfracloud.org/results/lbiaggi/vim80-ligatures/epel-7-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/lbiaggi/vim80-ligatures/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1

@@ -22,20 +22,16 @@ WORKDIR /home/workspace
 # install base tools
 RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
-  yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y && \
   yum install -y \
     curl vim net-tools git wget bash-completion jq unzip \
     make gcc graphviz \
     nginx openssh-server \
     epel-release \
+    chromedriver \
     && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   yum update -y && \
   yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
-    wget https://registry.npmmirror.com/-/binary/chromedriver/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip && \   
-    unzip chromedriver_linux64.zip && \
-    mv chromedriver /usr/bin/chromedriver && \
-    rm -f chromedriver_linux64.zip && \
   yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \

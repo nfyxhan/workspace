@@ -31,7 +31,7 @@ RUN yum update -y && \
     && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   yum update -y && \
-  yum install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
+  yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
     wget https://registry.npmmirror.com/-/binary/chromedriver/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip && \   
     unzip chromedriver_linux64.zip && \
     mv chromedriver /usr/bin/chromedriver && \

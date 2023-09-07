@@ -19,7 +19,7 @@ ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
 
-# install base tools
+### install_base_tools
 RUN yum update -y && \
   yum install -y epel-release && \
   yum install -y \
@@ -37,7 +37,7 @@ RUN yum update -y && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
     locale
 
-# config git
+### config_git
 RUN yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y git openssh-server && \
   yum clean all && \
@@ -46,7 +46,7 @@ RUN yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.
   echo 'export LESSCHARSET=utf-8' >> ${BASH_RC} && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
 
-# install vim8 
+### install_vim8 
 RUN yum install -y vim && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   yum update -y && \
@@ -57,7 +57,7 @@ RUN yum install -y vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \
   echo "alias vi='vim '" >>  ${BASH_RC}
 
-# install go
+### install_go
 RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
@@ -73,20 +73,18 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && \
     rm -rf ${HOME}/go/pkg ${HOME}/.cache/go-build
 
-# install kubectl
+### install_kubectl_helm
 RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x kubectl && \
   mv ./kubectl /usr/local/bin/ && \
-  echo 'source <(kubectl completion bash)' >>  ${BASH_RC}
-
-# install helm
-RUN wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
+  echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
+  wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
   tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
   mv linux-amd64/helm /usr/local/bin/helm && \
   echo 'source <(helm completion bash)' >>  ${BASH_RC} && \
   rm -rf linux-amd64 helm-${HELM_VERSION}-linux-amd64.tar.gz
 
-# install code-server
+### install_code_server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
   yum install -y nginx \
   yum clean all && \
@@ -96,19 +94,19 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     vscodevim.vim' ; \
     for i in $all ; do code-server --install-extension $i ; done
 
-# install nodejs
+### install_nodejs
 RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz && \
   tar -xvf node-${NODEJS_VERSION}-linux-x64.tar.gz && \
   mv node-${NODEJS_VERSION}-linux-x64 /usr/local/nodejs && \
   echo 'export PATH=$PATH:/usr/local/nodejs/bin' >>  ${BASH_RC} && \
   rm -rf node-${NODEJS_VERSION}-linux-x64.tar.gz 
 
-# install chrome
-RUN yum install -y chromedriver && \
-  yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
-  yum clean all
+### install_chrome
+# RUN yum install -y chromedriver && \
+#   yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
+#   yum clean all
 
-# # install glibc
+### install_glibc
 # RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \
 #   tar -zxvf  ${GLBC_VERSION}.tar.gz && \
 #   cd ${GLBC_VERSION} && \

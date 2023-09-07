@@ -21,17 +21,11 @@ WORKDIR /home/workspace
 
 # install base tools
 RUN yum update -y && \
-  yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y epel-release && \
   yum install -y \
-    curl vim net-tools git wget bash-completion jq unzip \
-    make gcc graphviz \
-    nginx openssh-server \
-    chromedriver \
+    curl net-tools wget bash-completion jq unzip \
+    make gcc \
     && \
-  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
-  yum update -y && \
-  yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
   yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \
@@ -43,20 +37,29 @@ RUN yum update -y && \
     locale
 
 # config git
-RUN git config --global user.name "${GIT_USER}" && \
+RUN yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
+  yum install -y git openssh-server && \
+  yum clean all && \
+  git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
   echo 'export LESSCHARSET=utf-8' >> ${BASH_RC} && \
   ssh-keygen -f ~/.ssh/id_rsa -N ''
 
-# config vim 
-RUN  rm -rf ~/.vim && \
+# install vim8 
+RUN yum install -y vim && \
+  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
+  yum update -y && \
+  yum clean all && \
+  rm -rf ~/.vim && \
   git clone https://github.com/nfyxhan/vim.git && \
   mv vim ~/.vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \
   echo "alias vi='vim '" >>  ${BASH_RC}
 
 # install go
-RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+RUN yum install -y graphviz \
+  yum clean all && \
+  wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf /usr/local/go && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
@@ -86,17 +89,25 @@ RUN wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
 
 # install code-server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
+  yum install -y nginx \
+  yum clean all && \
     all='golang.go \
     mhutchie.git-graph \
     alphabotsec.vscode-eclipse-keybindings \
     vscodevim.vim' ; \
     for i in $all ; do code-server --install-extension $i ; done
 
+# install nodejs
 RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz && \
   tar -xvf node-${NODEJS_VERSION}-linux-x64.tar.gz && \
   mv node-${NODEJS_VERSION}-linux-x64 /usr/local/nodejs && \
   echo 'export PATH=$PATH:/usr/local/nodejs/bin' >>  ${BASH_RC} && \
   rm -rf node-${NODEJS_VERSION}-linux-x64.tar.gz 
+
+# install chrome
+RUN yum install -y chromedriver && \
+  yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
+  yum clean all
 
 # # install glibc
 # RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \

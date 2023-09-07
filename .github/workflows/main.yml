@@ -6,6 +6,7 @@ env:
   REGISTRY: ${{ vars.REGISTRY }}
   FULL_IMAGE: ${{ vars.REGISTRY }}/${{ github.repository }}:v${{ github.sha }}
   CACHE_IMAGE: ${{ vars.REGISTRY }}/${{ github.repository }}:cache
+  LATEST_IMAGE: ${{ vars.REGISTRY }}/${{ github.repository }}:latest
 
 on:
   push:
@@ -33,7 +34,9 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.FULL_IMAGE }}
+        tags: |
+          ${{ env.FULL_IMAGE }}
+          ${{ env.LATEST_IMAGE }}
         cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
         cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
       env: 

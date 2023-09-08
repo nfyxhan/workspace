@@ -64,16 +64,16 @@ RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_
 ### install_go
 RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
     tar -zxv -C /usr/local/ && \
-    echo 'export PATH=$PATH:/usr/local/'go${GO_VERSION}.linux-amd64/bin >> ${BASH_RC} && \
+    echo 'export PATH=$PATH:/usr/local/'go/bin >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
     source ${BASH_RC} && \
-    # go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
-    # go install golang.org/x/tools/gopls@v0.11.0 && \
-    # go install github.com/go-delve/delve/cmd/dlv@v1.21.0 && \
-    # go install github.com/swaggo/swag/cmd/swag@v1.8.9 && \
-    # go install github.com/golang/mock/mockgen@v1.6.0 && \
-    # go install golang.org/x/tools/cmd/stringer@v0.3.0 && \
-    # go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && \
+    go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
+    go install golang.org/x/tools/gopls@v0.11.0 && \
+    go install github.com/go-delve/delve/cmd/dlv@v1.21.0 && \
+    go install github.com/swaggo/swag/cmd/swag@v1.8.9 && \
+    go install github.com/golang/mock/mockgen@v1.6.0 && \
+    go install golang.org/x/tools/cmd/stringer@v0.3.0 && \
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && \
     rm -rf ${HOME}/go/pkg ${HOME}/.cache/go-build
 
 ### install_kubectl_helm

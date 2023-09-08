@@ -82,7 +82,7 @@ RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bi
   echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
   mkdir -p /usr/local/helm && \
   curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
-  tar -zxv -C /user/local/helm/ --strip-components 1 && \
+  tar -zxv -C /usr/local/helm/ --strip-components 1 && \
   echo 'export PATH=$PATH:/usr/local/helm/' >> ${BASH_RC} && \
   echo 'source <(helm completion bash)' >>  ${BASH_RC}
 

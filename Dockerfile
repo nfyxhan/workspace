@@ -97,8 +97,6 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
 ### install_nodejs
 RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
   tar -zxv -C /usr/local/ && \
-    && \
-  mv  /usr/local/nodejs && \
   echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
 ### install_chrome

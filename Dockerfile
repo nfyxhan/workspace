@@ -5,6 +5,8 @@ ENV LANG=zh_CN.utf8
 ENV GIT_USER=nfyxhan
 ENV GIT_EMAIL=nfyxhan@163.com
 
+ENV GH_VERSION=2.34.0
+
 ENV GO_VERSION=1.18.10
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
@@ -52,6 +54,12 @@ RUN git config --global user.name "${GIT_USER}" && \
   mv vim ~/.vim && \
   vim +PlugClean[!] +PlugUpdate +qa && \
   echo "alias vi='vim '" >>  ${BASH_RC}
+
+### install_gh
+RUN wget https://github.com/cli/cli/releases/download/v2.34.0/gh_${GH_VERSION}_linux_amd64.tar.gz && \
+  tar -xvf gh_${GH_VERSION}_linux_amd64.tar.gz && \
+  mv gh_${GH_VERSION}_linux_amd64 /usr/local/github-cli && \
+  echo 'export PATH=$PATH:/usr/local/github-cli/bin' >>  ${BASH_RC}
 
 ### install_go
 RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \

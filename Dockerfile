@@ -32,14 +32,15 @@ RUN yum update -y && \
     graphviz \
     nginx \
     && \
-  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
+  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \
+    https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   yum update -y && \
   yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \
-  wget https://raw.githubusercontent.com/adobe-fonts/source-han-sans/release/OTF/SimplifiedChinese/SourceHanSansSC-Light.otf && \
-    mkdir -p /usr/share/fonts/chinese/ && \
-    mv SourceHanSansSC-Light.otf /usr/share/fonts/chinese/SourceHanSansSC-Light.otf && \
+  mkdir -p /usr/share/fonts/chinese/ && \
+  wget -O /usr/share/fonts/chinese/SourceHanSansSC-Light.otf \
+    https://raw.githubusercontent.com/adobe-fonts/source-han-sans/release/OTF/SimplifiedChinese/SourceHanSansSC-Light.otf && \
     fc-cache -fv && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
     locale
@@ -56,17 +57,15 @@ RUN git config --global user.name "${GIT_USER}" && \
   echo "alias vi='vim '" >>  ${BASH_RC}
 
 ### install_gh
-RUN wget https://github.com/cli/cli/releases/download/v2.34.0/gh_${GH_VERSION}_linux_amd64.tar.gz && \
-  tar -xvf gh_${GH_VERSION}_linux_amd64.tar.gz && \
-  mv gh_${GH_VERSION}_linux_amd64 /usr/local/github-cli && \
-  echo 'export PATH=$PATH:/usr/local/github-cli/bin' >>  ${BASH_RC}
+RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz | \
+  tar -zxv -C /usr/local/ && \
+  echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >>  ${BASH_RC} 
 
 ### install_go
-RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm -rf /usr/local/go && \
-    tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm -f go${GO_VERSION}.linux-amd64.tar.gz && \
-    echo 'export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin:${HOME}/go/bin:/data/bin' >>  ${BASH_RC} && \
+RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
+    tar -C /usr/local -zxv && \
+    echo 'export PATH=$PATH:/usr/local/'go${GO_VERSION}.linux-amd64/bin >> ${BASH_RC} && \
+    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
     source ${BASH_RC} && \
     go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
     go install golang.org/x/tools/gopls@v0.11.0 && \
@@ -78,15 +77,14 @@ RUN wget https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     rm -rf ${HOME}/go/pkg ${HOME}/.cache/go-build
 
 ### install_kubectl_helm
-RUN curl -Lo ./kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
-  chmod +x kubectl && \
-  mv ./kubectl /usr/local/bin/ && \
+RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
+  chmod +x /usr/local/bin/kubectl && \
   echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
-  wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz && \
-  tar -xvf helm-${HELM_VERSION}-linux-amd64.tar.gz && \
-  mv linux-amd64/helm /usr/local/bin/helm && \
-  echo 'source <(helm completion bash)' >>  ${BASH_RC} && \
-  rm -rf linux-amd64 helm-${HELM_VERSION}-linux-amd64.tar.gz
+  mkdir -p /usr/local/helm && \
+  curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
+  tar -zxv -C /user/local/helm --strip-components 1 && \
+  echo 'export PATH=$PATH:/usr/local/helm/' >> ${BASH_RC} && \
+  echo 'source <(helm completion bash)' >>  ${BASH_RC}
 
 ### install_code_server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
@@ -97,11 +95,11 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     for i in $all ; do code-server --install-extension $i ; done
 
 ### install_nodejs
-RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz && \
-  tar -xvf node-${NODEJS_VERSION}-linux-x64.tar.gz && \
-  mv node-${NODEJS_VERSION}-linux-x64 /usr/local/nodejs && \
-  echo 'export PATH=$PATH:/usr/local/nodejs/bin' >>  ${BASH_RC} && \
-  rm -rf node-${NODEJS_VERSION}-linux-x64.tar.gz 
+RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
+  tar -zxv -C /usr/local/ && \
+    && \
+  mv  /usr/local/nodejs && \
+  echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
 ### install_chrome
 # RUN yum install -y chromedriver && \
@@ -109,15 +107,15 @@ RUN wget https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VER
 #   yum clean all
 
 ### install_glibc
-# RUN wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz && \
-#   tar -zxvf  ${GLBC_VERSION}.tar.gz && \
+# RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz | \
+#   tar -zxv ${GLBC_VERSION}.tar.gz && \
 #   cd ${GLBC_VERSION} && \
 #   mkdir build && \
 #   cd build/ && \
 #   ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
 #   make -j 8 && \
 #   make install && \
-#   cd ../.. && rm -rf ${GLBC_VERSION} ${GLBC_VERSION}.tar.gz
+#   cd ../.. && rm -rf ${GLBC_VERSION}
 
 ADD ./hack ./hack
 

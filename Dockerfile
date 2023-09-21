@@ -80,6 +80,8 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
 RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x /usr/local/bin/kubectl && \
   echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
+  curl -Lo /usr/bin/kubebuilder https://github.com/kubernetes-sigs/kubebuilder/releases/download/v3.12.0/kubebuilder_linux_amd64 && \
+  chmod +x /usr/bin/kubebuilder && \
   mkdir -p /usr/local/helm && \
   curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
   tar -zxv -C /usr/local/helm/ --strip-components 1 && \

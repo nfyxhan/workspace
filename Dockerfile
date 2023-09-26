@@ -59,12 +59,12 @@ RUN git config --global user.name "${GIT_USER}" && \
 
 ### install_gh
 RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz | \
-  tar -zxv -C /usr/local/ && \
+  tar -zx -C /usr/local/ && \
   echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >>  ${BASH_RC} 
 
 ### install_go
 RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
-    tar -zxv -C /usr/local/ && \
+    tar -zx -C /usr/local/ && \
     echo 'export PATH=$PATH:/usr/local/'go/bin >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
     source ${BASH_RC} && \
@@ -86,7 +86,7 @@ RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bi
   echo 'source <(kubebuilder completion bash)' >>  ${BASH_RC} && \
   mkdir -p /usr/local/helm && \
   curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
-  tar -zxv -C /usr/local/helm/ --strip-components 1 && \
+  tar -zx -C /usr/local/helm/ --strip-components 1 && \
   echo 'export PATH=$PATH:/usr/local/helm/' >> ${BASH_RC} && \
   echo 'source <(helm completion bash)' >>  ${BASH_RC}
 
@@ -100,7 +100,7 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
 
 ### install_nodejs
 RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
-  tar -zxv -C /usr/local/ && \
+  tar -zx -C /usr/local/ && \
   echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
 ### install_chrome
@@ -110,7 +110,7 @@ RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_
 
 ### install_glibc
 # RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz | \
-#   tar -zxv && \
+#   tar -zx && \
 #   cd ${GLBC_VERSION} && \
 #   mkdir build && \
 #   cd build/ && \

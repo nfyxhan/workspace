@@ -14,7 +14,7 @@ ENV GOPROXY=https://goproxy.cn
 ENV GLBC_VERSION=glibc-2.18
 
 ENV KUBE_VERSION=v1.24.15
-ENV KUBEBUILDER_VERSION=v3.10.0
+ENV KUBEBUILDER_VERSION=v3.12.0
 ENV HELM_VERSION=v3.6.3
 ENV NODEJS_VERSION=v14.21.3
 ENV BASH_RC=/etc/bashrc
@@ -68,14 +68,20 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
     echo 'export PATH=$PATH:/usr/local/'go/bin >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
     source ${BASH_RC} && \
-    go install golang.org/x/tools/cmd/goimports@v0.11.1 && \
-    go install golang.org/x/tools/gopls@v0.11.0 && \
-    go install github.com/go-delve/delve/cmd/dlv@v1.21.0 && \
-    go install github.com/swaggo/swag/cmd/swag@v1.8.9 && \
-    go install github.com/golang/mock/mockgen@v1.6.0 && \
-    go install golang.org/x/tools/cmd/stringer@v0.3.0 && \
-    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 && \
-    rm -rf ${HOME}/go/pkg ${HOME}/.cache/go-build
+    all='golang.org/x/tools/cmd/goimports@v0.11.1 \
+    golang.org/x/tools/gopls@v0.11.0 \
+    github.com/go-delve/delve/cmd/dlv@v1.21.0 \
+    github.com/swaggo/swag/cmd/swag@v1.8.9 \
+    github.com/golang/mock/mockgen@v1.6.0 \
+    golang.org/x/tools/cmd/stringer@v0.3.0 \
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 \
+    github.com/cweill/gotests/gotests@v1.6.0 \
+    github.com/fatih/gomodifytags@v1.16.0 \
+    github.com/josharian/impl@v1.1.0 \
+    github.com/haya14busa/goplay/cmd/goplay@v1.0.0 \
+    honnef.co/go/tools/cmd/staticcheck@v0.3.3'; \
+    for i in $all ; do go install $i ; done && \
+    rm -rf ${HOME}/go/pkg ${HOME}/.cache
 
 ### install_kubectl_helm
 RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \

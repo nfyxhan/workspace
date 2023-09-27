@@ -78,7 +78,6 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
     github.com/cweill/gotests/gotests@v1.6.0 \
     github.com/fatih/gomodifytags@v1.16.0 \
     github.com/josharian/impl@v1.1.0 \
-    github.com/haya14busa/goplay/cmd/goplay@v1.0.0 \
     honnef.co/go/tools/cmd/staticcheck@v0.3.3'; \
     for i in $all ; do go install $i ; done && \
     rm -rf ${HOME}/go/pkg ${HOME}/.cache

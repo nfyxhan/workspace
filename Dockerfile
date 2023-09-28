@@ -100,6 +100,7 @@ RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bi
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
     all='golang.go \
     mhutchie.git-graph \
+    waderyan.gitblame \
     alphabotsec.vscode-eclipse-keybindings \
     vscodevim.vim' ; \
     for i in $all ; do code-server --install-extension $i ; done

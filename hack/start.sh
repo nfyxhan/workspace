@@ -7,4 +7,4 @@ echo docker run -itd --security-opt=seccomp:unconfined \
     --name workspace \
     -v ${data_path}:${data_path} \
     "${FULL_IMAGE}" \
-    /bin/bash
+    bash

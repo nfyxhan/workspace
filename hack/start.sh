@@ -10,4 +10,4 @@ echo docker run -itd --security-opt=seccomp:unconfined \
     -p ${port}:${port} \
     -v ${data_path}:${data_path} \
     "${FULL_IMAGE}" \
-    code-server --bind-addr ${addr}:${port} ${data_path}
+    /bin/bash -c "set -e && code-server --bind-addr ${addr}:${port} ${data_path}"

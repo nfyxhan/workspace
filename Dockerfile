@@ -102,7 +102,8 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     mhutchie.git-graph \
     waderyan.gitblame \
     alphabotsec.vscode-eclipse-keybindings \
-    vscodevim.vim' ; \
+    vscodevim.vim \
+    donjayamanne.githistory' ; \
     for i in $all ; do code-server --install-extension $i ; done
 
 ### install_nodejs

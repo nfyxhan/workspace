@@ -107,7 +107,7 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     dbaeumer.vscode-eslint \
     richie5um2.vscode-sort-json \
     raer0.codium-insertdatestring \
-    znck.vue' ; \
+    Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
 
 ### install_nodejs

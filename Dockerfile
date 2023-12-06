@@ -26,7 +26,7 @@ RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y epel-release && \
   yum install -y \
-    curl net-tools wget bash-completion jq unzip fontconfig \
+    curl net-tools wget bash-completion jq unzip fontconfig gettext \
     make gcc \
     git openssh-server \
     vim \
@@ -104,7 +104,6 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     alphabotsec.vscode-eclipse-keybindings \
     vscodevim.vim \
     donjayamanne.githistory \
-    dbaeumer.vscode-eslint \
     richie5um2.vscode-sort-json \
     raer0.codium-insertdatestring \
     Vue.volar' ; \

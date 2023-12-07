@@ -26,7 +26,7 @@ RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y epel-release && \
   yum install -y \
-    curl net-tools wget bash-completion jq unzip fontconfig gettext \
+    curl net-tools wget bash-completion jq unzip fontconfig gettext expect \
     make gcc \
     git openssh-server \
     vim \

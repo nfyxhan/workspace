@@ -115,9 +115,9 @@ RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_
   echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
 ### install_chrome
-# RUN yum install -y chromedriver && \
-#   yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
-#   yum clean all
+RUN yum install -y chromedriver && \
+  yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
+  yum clean all
 
 ### install_glibc
 # RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz | \

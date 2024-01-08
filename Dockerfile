@@ -106,6 +106,7 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     donjayamanne.githistory \
     richie5um2.vscode-sort-json \
     raer0.codium-insertdatestring \
+    hediet.vscode-drawio \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
 

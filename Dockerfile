@@ -116,6 +116,6 @@ RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_
 
 ADD ./hack ./hack
 
-ADD ./Dockerfile ./Dockerfile
+ADD ./Dockerfile .
 
-ADD ./Makefile
+ADD ./Makefile .

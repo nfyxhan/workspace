@@ -106,7 +106,6 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     donjayamanne.githistory \
     richie5um2.vscode-sort-json \
     raer0.codium-insertdatestring \
-    hediet.vscode-drawio \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
 
@@ -115,22 +114,8 @@ RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_
   tar -zx -C /usr/local/ && \
   echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
-### install_chrome
-RUN yum install -y chromedriver && \
-  yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
-  yum clean all
-
-### install_glibc
-# RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz | \
-#   tar -zx && \
-#   cd ${GLBC_VERSION} && \
-#   mkdir build && \
-#   cd build/ && \
-#   ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
-#   make -j 8 && \
-#   make install && \
-#   cd ../.. && rm -rf ${GLBC_VERSION}
-
 ADD ./hack ./hack
 
 ADD ./Dockerfile ./Dockerfile
+
+ADD ./Makefile

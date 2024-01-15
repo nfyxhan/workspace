@@ -19,8 +19,7 @@ glibc:
 	make install && \
 	cd ../.. && rm -rf ${GLBC_VERSION}
 
-go-tools:
-    all='golang.org/x/tools/cmd/goimports@v0.11.1 \
+all='golang.org/x/tools/cmd/goimports@v0.11.1 \
     golang.org/x/tools/gopls@v0.11.0 \
     github.com/go-delve/delve/cmd/dlv@v1.9.1 \
     github.com/swaggo/swag/cmd/swag@v1.8.9 \
@@ -30,6 +29,8 @@ go-tools:
     github.com/cweill/gotests/gotests@v1.6.0 \
     github.com/fatih/gomodifytags@v1.16.0 \
     github.com/josharian/impl@v1.1.0 \
-    go get -u github.com/PaulXu-cn/go-mod-graph-chart/gmchart \
-    honnef.co/go/tools/cmd/staticcheck@v0.3.3'; \
-    for i in $all ; do go install $i ; done 
+    github.com/PaulXu-cn/go-mod-graph-chart/gmchart@v0.5.3 \
+    honnef.co/go/tools/cmd/staticcheck@v0.3.3'
+
+go-tools:
+	for i in $(shell echo ${all}) ; do echo installing $$i ; go install $$i ; done 

@@ -77,23 +77,8 @@ ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
 RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
     tar -zx -C /usr/local/ && \
-    echo 'export PATH=$PATH:/usr/local/'go/bin >> ${BASH_RC} && \
-    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
-    source ${BASH_RC} && \
-    all='golang.org/x/tools/cmd/goimports@v0.11.1 \
-    golang.org/x/tools/gopls@v0.11.0 \
-    github.com/go-delve/delve/cmd/dlv@v1.9.1 \
-    github.com/swaggo/swag/cmd/swag@v1.8.9 \
-    github.com/golang/mock/mockgen@v1.6.0 \
-    golang.org/x/tools/cmd/stringer@v0.3.0 \
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 \
-    github.com/cweill/gotests/gotests@v1.6.0 \
-    github.com/fatih/gomodifytags@v1.16.0 \
-    github.com/josharian/impl@v1.1.0 \
-    go get -u github.com/PaulXu-cn/go-mod-graph-chart/gmchart \
-    honnef.co/go/tools/cmd/staticcheck@v0.3.3'; \
-    for i in $all ; do go install $i ; done && \
-    rm -rf ${HOME}/go/pkg ${HOME}/.cache
+    echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
+    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
 
 ### install_code_server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \

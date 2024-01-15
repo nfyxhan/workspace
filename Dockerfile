@@ -1,27 +1,11 @@
 FROM centos:7
 
-ENV LANG=zh_CN.utf8
-
-ENV GIT_USER=nfyxhan
-ENV GIT_EMAIL=nfyxhan@163.com
-
-ENV GH_VERSION=2.34.0
-
-ENV GO_VERSION=1.17.10
-ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.cn
-
-ENV GLBC_VERSION=glibc-2.18
-
-ENV KUBE_VERSION=v1.24.15
-ENV KUBEBUILDER_VERSION=v3.12.0
-ENV HELM_VERSION=v3.6.3
-ENV NODEJS_VERSION=v14.21.3
 ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
 
 ### install_base_tools
+ENV LANG=zh_CN.utf8
 RUN yum update -y && \
   yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
   yum install -y epel-release && \
@@ -47,6 +31,8 @@ RUN yum update -y && \
     locale
 
 ### config_git_vim
+ENV GIT_USER=nfyxhan
+ENV GIT_EMAIL=nfyxhan@163.com
 RUN git config --global user.name "${GIT_USER}" && \
   git config --global user.email "${GIT_EMAIL}" && \
   echo 'export LESSCHARSET=utf-8' >> ${BASH_RC} && \
@@ -58,32 +44,15 @@ RUN git config --global user.name "${GIT_USER}" && \
   echo "alias vi='vim '" >>  ${BASH_RC}
 
 ### install_gh
+ENV GH_VERSION=2.34.0
 RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz | \
   tar -zx -C /usr/local/ && \
   echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >>  ${BASH_RC} 
 
-### install_go
-RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
-    tar -zx -C /usr/local/ && \
-    echo 'export PATH=$PATH:/usr/local/'go/bin >> ${BASH_RC} && \
-    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
-    source ${BASH_RC} && \
-    all='golang.org/x/tools/cmd/goimports@v0.11.1 \
-    golang.org/x/tools/gopls@v0.11.0 \
-    github.com/go-delve/delve/cmd/dlv@v1.21.0 \
-    github.com/swaggo/swag/cmd/swag@v1.8.9 \
-    github.com/golang/mock/mockgen@v1.6.0 \
-    golang.org/x/tools/cmd/stringer@v0.3.0 \
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 \
-    github.com/cweill/gotests/gotests@v1.6.0 \
-    github.com/fatih/gomodifytags@v1.16.0 \
-    github.com/josharian/impl@v1.1.0 \
-    go get -u github.com/PaulXu-cn/go-mod-graph-chart/gmchart \
-    honnef.co/go/tools/cmd/staticcheck@v0.3.3'; \
-    for i in $all ; do go install $i ; done && \
-    rm -rf ${HOME}/go/pkg ${HOME}/.cache
-
 ### install_kubectl_helm
+ENV KUBE_VERSION=v1.24.15
+ENV KUBEBUILDER_VERSION=v3.12.0
+ENV HELM_VERSION=v3.6.3
 RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
   chmod +x /usr/local/bin/kubectl && \
   echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
@@ -95,6 +64,36 @@ RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bi
   tar -zx -C /usr/local/helm/ --strip-components 1 && \
   echo 'export PATH=$PATH:/usr/local/helm/' >> ${BASH_RC} && \
   echo 'source <(helm completion bash)' >>  ${BASH_RC}
+
+### install_nodejs
+ENV NODEJS_VERSION=v14.21.3
+RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
+  tar -zx -C /usr/local/ && \
+  echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
+
+### install_go
+ENV GO_VERSION=1.17.10
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.cn
+RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
+    tar -zx -C /usr/local/ && \
+    echo 'export PATH=$PATH:/usr/local/'go/bin >> ${BASH_RC} && \
+    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC} && \
+    source ${BASH_RC} && \
+    all='golang.org/x/tools/cmd/goimports@v0.11.1 \
+    golang.org/x/tools/gopls@v0.11.0 \
+    github.com/go-delve/delve/cmd/dlv@v1.9.1 \
+    github.com/swaggo/swag/cmd/swag@v1.8.9 \
+    github.com/golang/mock/mockgen@v1.6.0 \
+    golang.org/x/tools/cmd/stringer@v0.3.0 \
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 \
+    github.com/cweill/gotests/gotests@v1.6.0 \
+    github.com/fatih/gomodifytags@v1.16.0 \
+    github.com/josharian/impl@v1.1.0 \
+    go get -u github.com/PaulXu-cn/go-mod-graph-chart/gmchart \
+    honnef.co/go/tools/cmd/staticcheck@v0.3.3'; \
+    for i in $all ; do go install $i ; done && \
+    rm -rf ${HOME}/go/pkg ${HOME}/.cache
 
 ### install_code_server
 RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
@@ -108,11 +107,6 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-s
     raer0.codium-insertdatestring \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
-
-### install_nodejs
-RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
-  tar -zx -C /usr/local/ && \
-  echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
 ADD ./hack ./hack
 

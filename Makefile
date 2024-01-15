@@ -32,5 +32,8 @@ all='golang.org/x/tools/cmd/goimports@v0.11.1 \
     github.com/PaulXu-cn/go-mod-graph-chart/gmchart@v0.5.3 \
     honnef.co/go/tools/cmd/staticcheck@v0.3.3'
 
+go:
+GOBIN=$(shell which go)
+
 go-tools:
-	for i in $(shell echo ${all}) ; do echo installing $$i ; go install $$i ; done 
+	for i in $(shell echo ${all}) ; do echo installing $$i ; $(GOBIN) install $$i ; done 

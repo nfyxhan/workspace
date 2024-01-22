@@ -25,7 +25,7 @@ all='golang.org/x/tools/cmd/goimports@v0.11.1 \
     github.com/swaggo/swag/cmd/swag@v1.8.9 \
     github.com/golang/mock/mockgen@v1.6.0 \
     golang.org/x/tools/cmd/stringer@v0.3.0 \
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1 \
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.44.2 \
     github.com/cweill/gotests/gotests@v1.6.0 \
     github.com/fatih/gomodifytags@v1.16.0 \
     github.com/josharian/impl@v1.1.0 \

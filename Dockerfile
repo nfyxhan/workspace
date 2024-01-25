@@ -80,8 +80,13 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
     echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
 
+ADD ./makefile/glibc.mk .
+
+RUN make glibc -f glibc.mk
+
+ENV CODE_SERVER_VERSION=4.20.1
 ### install_code_server
-RUN rpm -i https://github.com/coder/code-server/releases/download/v4.16.1/code-server-4.16.1-amd64.rpm && \
+RUN rpm -i https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-amd64.rpm && \
     all='golang.go \
     mhutchie.git-graph \
     waderyan.gitblame \

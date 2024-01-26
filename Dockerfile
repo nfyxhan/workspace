@@ -67,14 +67,15 @@ RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bi
 
 ### install node version mamanger
 ENV NVM_VERSION=0.33.1
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh|bash
+ENV NODEJS_VERSION=v14.21.3
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash &&
+  nvm install ${NODEJS_VERSION}
 
 ### install_nodejs
-ENV NODEJS_VERSION=v14.21.3
-ENV NODEJS_VERSION=v18.18.1
-RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
-  tar -zx -C /usr/local/ && \
-  echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
+# ENV NODEJS_VERSION=v18.18.1
+# RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
+#   tar -zx -C /usr/local/ && \
+#   echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
 
 ### install_go
 ENV GO_VERSION=1.17.10
@@ -87,6 +88,7 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
 
 ### install_code_server
 ENV CODE_SERVER_VERSION=4.20.1
+ENV CODE_SERVER_VERSION=4.16.1
 RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz | \
     tar -zx -C /usr/local/ && \
     echo 'export PATH=$PATH:/usr/local/code-server/bin' >> ${BASH_RC} && \

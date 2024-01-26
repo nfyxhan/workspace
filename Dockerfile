@@ -85,9 +85,12 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
     echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
 
-ENV CODE_SERVER_VERSION=4.20.1
 ### install_code_server
-RUN rpm -i https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-amd64.rpm && \
+ENV CODE_SERVER_VERSION=4.20.1
+RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz | \
+    tar -zx -C /usr/local/ && \
+    echo 'export PATH=$PATH:/usr/local/code-server/bin' >> ${BASH_RC} && \
+    . ${BASH_RC} && \
     all='golang.go \
     mhutchie.git-graph \
     waderyan.gitblame \
@@ -97,7 +100,7 @@ RUN rpm -i https://github.com/coder/code-server/releases/download/v${CODE_SERVER
     richie5um2.vscode-sort-json \
     raer0.codium-insertdatestring \
     Vue.volar' ; \
-    for i in $all ; do code-server --install-extension $i ; done
+    for i in $all ; do echo code-server --install-extension $i ; done
 
 ADD ./hack ./hack
 

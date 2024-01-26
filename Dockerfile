@@ -91,8 +91,7 @@ ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
 RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz | \
     tar -zx -C /usr/local/ && \
-    echo 'export PATH=$PATH:/usr/local/code-server/bin' >> ${BASH_RC} && \
-    . ${BASH_RC} && \
+    ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-amd64/bin/code-server /usr/bin/ && \
     all='golang.go \
     mhutchie.git-graph \
     waderyan.gitblame \
@@ -102,7 +101,7 @@ RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVE
     richie5um2.vscode-sort-json \
     raer0.codium-insertdatestring \
     Vue.volar' ; \
-    for i in $all ; do echo code-server --install-extension $i ; done
+    for i in $all ; do code-server --install-extension $i ; done
 
 ADD ./hack ./hack
 

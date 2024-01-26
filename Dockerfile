@@ -68,7 +68,7 @@ RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bi
 ### install node version mamanger
 ENV NVM_VERSION=0.33.1
 ENV NODEJS_VERSION=v14.21.3
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash &&
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash && \
   nvm install ${NODEJS_VERSION}
 
 ### install_nodejs

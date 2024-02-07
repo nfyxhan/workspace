@@ -49,8 +49,17 @@ RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_
   tar -zx -C /usr/local/ && \
   echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >>  ${BASH_RC} 
 
+### install_go
+ENV GO_VERSION=1.18.10
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.cn
+RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
+    tar -zx -C /usr/local/ && \
+    echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
+    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
+
 ### install_kubectl_helm
-ENV KUBE_VERSION=v1.24.15
+ENV KUBE_VERSION=v1.26.11
 ENV KUBEBUILDER_VERSION=v3.12.0
 ENV HELM_VERSION=v3.6.3
 RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
@@ -71,21 +80,6 @@ ENV NODEJS_VERSION=v14.21.3
 RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash && \
   . ${HOME}/.bashrc && \
   nvm install ${NODEJS_VERSION}
-
-### install_nodejs
-# ENV NODEJS_VERSION=v18.18.1
-# RUN curl -L https://nodejs.org/download/release/${NODEJS_VERSION}/node-${NODEJS_VERSION}-linux-x64.tar.gz | \
-#   tar -zx -C /usr/local/ && \
-#   echo 'export PATH=$PATH:/usr/local/'node-${NODEJS_VERSION}-linux-x64'/bin' >>  ${BASH_RC}
-
-### install_go
-ENV GO_VERSION=1.17.10
-ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.cn
-RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
-    tar -zx -C /usr/local/ && \
-    echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
-    echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
 
 ### install_code_server
 ENV CODE_SERVER_VERSION=4.20.1

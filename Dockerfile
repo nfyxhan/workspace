@@ -97,8 +97,13 @@ RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVE
     vscodevim.vim \
     donjayamanne.githistory \
     richie5um2.vscode-sort-json \
-    raer0.codium-insertdatestring \
+    jsynowiec.vscode-insertdatestring \
     SenseTime.raccoon \
+    balazs4.gitlab-pipeline-monitor \
+    EditorConfig.EditorConfig \
+    wmaurer.change-case \
+    oderwat.indent-rainbow \
+    vscode-icons-team.vscode-icons \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
 

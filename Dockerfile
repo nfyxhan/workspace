@@ -47,7 +47,8 @@ RUN git config --global user.name "${GIT_USER}" && \
 ENV GH_VERSION=2.34.0
 RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz | \
   tar -zx -C /usr/local/ && \
-  echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >>  ${BASH_RC} 
+  echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >> ${BASH_RC} && \
+  echo 'source <(gh completion bash)' >> ${BASH_RC}
 
 ### install_go
 ENV GO_VERSION=1.18.10

@@ -16,6 +16,7 @@ RUN yum update -y && \
     vim \
     graphviz \
     nginx \
+    stress-ng \
     && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \
     https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \

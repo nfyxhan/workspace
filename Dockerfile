@@ -105,6 +105,7 @@ RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVE
     wmaurer.change-case \
     oderwat.indent-rainbow \
     vscode-icons-team.vscode-icons \
+    TaipaXu.github-trending \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
 

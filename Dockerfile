@@ -10,7 +10,7 @@ add ./hack/env.sh ./env.sh
 
 ### install_base_tools
 ENV LANG=zh_CN.utf8
-RUN . env.sh && \
+RUN . ./env.sh && \
   yum update -y && \
   yum install -y epel-release && \
   yum install -y \
@@ -72,7 +72,7 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-${RUN_PLATFORM}.ta
 ENV KUBE_VERSION=v1.26.11
 ENV KUBEBUILDER_VERSION=v3.12.0
 ENV HELM_VERSION=v3.6.3
-RUN . env.sh && \ 
+RUN . ./env.sh && \ 
   curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/${RUN_PLATFORM}/kubectl && \
   chmod +x /usr/local/bin/kubectl && \
   echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
@@ -96,7 +96,7 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
-RUN . env.sh && \ 
+RUN . ./env.sh && \ 
     curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
     tar -zx -C /usr/local/ && \
     ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ && \

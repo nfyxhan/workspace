@@ -37,6 +37,7 @@ jobs:
         tags: |
           ${{ env.FULL_IMAGE }}
           ${{ env.LATEST_IMAGE }}
+        platforms: linux/amd64,linux/arm64
         cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
         cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
       env: 

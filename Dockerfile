@@ -4,7 +4,7 @@ ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
 
-add ./hack/env.sh .
+add ./hack/env.sh ./env.sh
 
 ### install_base_tools
 ENV LANG=zh_CN.utf8
@@ -49,7 +49,8 @@ RUN git config --global user.name "${GIT_USER}" && \
 
 ### install_gh
 ENV GH_VERSION=2.34.0
-RUN . env.sh && \ 
+RUN pwd && ls -la && \
+  . ./env.sh && \ 
   curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${RUN_PLATFORM}.tar.gz | \
   tar -zx -C /usr/local/ && \
   echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_${RUN_PLATFORM}'/bin' >> ${BASH_RC} && \

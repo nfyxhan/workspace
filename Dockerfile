@@ -9,7 +9,6 @@ add ./hack/env.sh .
 ### install_base_tools
 ENV LANG=zh_CN.utf8
 RUN yum update -y && \
-  yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
   yum install -y epel-release && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig gettext expect \
@@ -33,6 +32,8 @@ RUN yum update -y && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
     locale
 
+# yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
+# yum install -y git
 ### config_git_vim
 ENV GIT_USER=nfyxhan
 ENV GIT_EMAIL=nfyxhan@163.com

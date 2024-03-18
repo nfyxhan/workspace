@@ -63,7 +63,8 @@ RUN pwd && ls -la && \
 ENV GO_VERSION=1.18.10
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
-RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-${RUN_PLATFORM}.tar.gz | \
+RUN . ./env.sh && \ 
+    curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-${RUN_PLATFORM}.tar.gz | \
     tar -zx -C /usr/local/ && \
     echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}

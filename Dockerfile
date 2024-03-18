@@ -97,12 +97,13 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
-ENV CODE_SERVER_VERSION=4.10.0
+ENV CODE_SERVER_VERSION=4.8.3
 RUN . ./env.sh && \ 
     curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
     tar -zx -C /usr/local/ && \
     ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ && \
-    sh ./hack/replace-code-server-market.sh && \
+    sh ./hack/replace-code-server-market.sh 
+    # && \
     # all='golang.go \
     # mhutchie.git-graph \
     # waderyan.gitblame \

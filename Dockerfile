@@ -4,10 +4,12 @@ ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
 
+add ./hack/env.sh .
+
 ### install_base_tools
 ENV LANG=zh_CN.utf8
 RUN yum update -y && \
-  yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm -y && \
+  yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
   yum install -y epel-release && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig gettext expect \
@@ -46,16 +48,17 @@ RUN git config --global user.name "${GIT_USER}" && \
 
 ### install_gh
 ENV GH_VERSION=2.34.0
-RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz | \
+RUN . env.sh && \ 
+  curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_${RUN_PLATFORM}.tar.gz | \
   tar -zx -C /usr/local/ && \
-  echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_amd64'/bin' >> ${BASH_RC} && \
+  echo 'export PATH=$PATH:/usr/local/'gh_${GH_VERSION}_linux_${RUN_PLATFORM}'/bin' >> ${BASH_RC} && \
   echo 'source <(gh completion bash)' >> ${BASH_RC}
 
 ### install_go
 ENV GO_VERSION=1.18.10
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
-RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
+RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-${RUN_PLATFORM}.tar.gz | \
     tar -zx -C /usr/local/ && \
     echo 'export PATH=$PATH:/usr/local/go/bin' >> ${BASH_RC} && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
@@ -64,14 +67,15 @@ RUN curl -L https://golang.google.cn/dl/go${GO_VERSION}.linux-amd64.tar.gz | \
 ENV KUBE_VERSION=v1.26.11
 ENV KUBEBUILDER_VERSION=v3.12.0
 ENV HELM_VERSION=v3.6.3
-RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl && \
+RUN . env.sh && \ 
+  curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/${RUN_PLATFORM}/kubectl && \
   chmod +x /usr/local/bin/kubectl && \
   echo 'source <(kubectl completion bash)' >>  ${BASH_RC} && \
-  curl -Lo /usr/bin/kubebuilder https://github.com/kubernetes-sigs/kubebuilder/releases/download/${KUBEBUILDER_VERSION}/kubebuilder_linux_amd64 && \
+  curl -Lo /usr/bin/kubebuilder https://github.com/kubernetes-sigs/kubebuilder/releases/download/${KUBEBUILDER_VERSION}/kubebuilder_linux_${RUN_PLATFORM} && \
   chmod +x /usr/bin/kubebuilder && \
   echo 'source <(kubebuilder completion bash)' >>  ${BASH_RC} && \
   mkdir -p /usr/local/helm && \
-  curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | \
+  curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
   tar -zx -C /usr/local/helm/ --strip-components 1 && \
   echo 'export PATH=$PATH:/usr/local/helm/' >> ${BASH_RC} && \
   echo 'source <(helm completion bash)' >>  ${BASH_RC}
@@ -87,9 +91,10 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
-RUN curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-amd64.tar.gz | \
+RUN . env.sh && \ 
+    curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
     tar -zx -C /usr/local/ && \
-    ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-amd64/bin/code-server /usr/bin/ && \
+    ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ && \
     sh ./hack/replace-code-server-market.sh && \
     all='golang.go \
     mhutchie.git-graph \

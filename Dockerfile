@@ -1,5 +1,7 @@
 FROM centos:7
 
+ARG TARGETPLATFORM=linux/amd64
+
 ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
@@ -8,7 +10,8 @@ add ./hack/env.sh ./env.sh
 
 ### install_base_tools
 ENV LANG=zh_CN.utf8
-RUN yum update -y && \
+RUN . env.sh && \
+  yum update -y && \
   yum install -y epel-release && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig gettext expect \

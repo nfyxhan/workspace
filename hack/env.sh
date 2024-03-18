@@ -7,5 +7,3 @@ if [[ "${TARGETPLATFORM}" == "linux/arm64" ]] ; then
 else
     export RUN_PLATFORM=amd64
 fi
-
-if [[ "" ]]

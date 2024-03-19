@@ -20,6 +20,7 @@ RUN . ./env.sh && \
     vim \
     graphviz \
     nginx \
+    procps \
     && \
   yum clean all
 
@@ -100,7 +101,7 @@ ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
 # ENV CODE_SERVER_VERSION=3.4.1
 RUN . ./env.sh && \ 
-    yum install -y https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm | \
+    rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm | \
     all='golang.go \
     mhutchie.git-graph \
     waderyan.gitblame \

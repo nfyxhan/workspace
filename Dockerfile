@@ -93,7 +93,7 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
   . ${HOME}/.bashrc && \
   nvm install ${NODEJS_VERSION}
 
-ENV GLBC_VERSION ?= glibc-2.25
+ENV GLBC_VERSION=glibc-2.25
 
 RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz | \
 	tar -zx && \

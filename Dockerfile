@@ -15,7 +15,7 @@ RUN . ./env.sh && \
   yum install -y epel-release && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig gettext expect \
-    make gcc \
+    make gcc gcc-c++ kernel-devel \
     git openssh-server \
     vim \
     graphviz \

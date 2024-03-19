@@ -1,4 +1,4 @@
-FROM centos:7
+FROM redhat/ubi8:8.9-1136
 
 ARG TARGETPLATFORM=linux/amd64
 
@@ -93,23 +93,11 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
   . ${HOME}/.bashrc && \
   nvm install ${NODEJS_VERSION}
 
-# ENV GLBC_VERSION=glibc-2.25
-
-# RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/${GLBC_VERSION}.tar.gz | \
-# 	tar -zx && \
-# 	cd ${GLBC_VERSION} && \
-# 	mkdir build && \
-# 	cd build/ && \
-# 	../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin && \
-# 	make -j 8 && \
-# 	make install && \
-# 	cd ../.. && rm -rf ${GLBC_VERSION}
-
 ### install_code_server
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
-ENV CODE_SERVER_VERSION=3.4.1
+# ENV CODE_SERVER_VERSION=3.4.1
 RUN . ./env.sh && \ 
     yum install -y https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm | \
     all='golang.go \

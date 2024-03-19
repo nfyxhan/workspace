@@ -97,12 +97,9 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
-ENV CODE_SERVER_VERSION=4.0.2
+# ENV CODE_SERVER_VERSION=4.0.2
 RUN . ./env.sh && \ 
-    curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
-    tar -zx -C /usr/local/ && \
-    ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ && \
-    sh ./hack/replace-code-server-market.sh && \
+    yum install -y https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm | \
     all='golang.go \
     mhutchie.git-graph \
     waderyan.gitblame \
@@ -120,6 +117,9 @@ RUN . ./env.sh && \
     TaipaXu.github-trending \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
+        # tar -zx -C /usr/local/ && \
+    # ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ && \
+    # sh ./hack/replace-code-server-market.sh && \
 
 ADD ./hack/* ./hack/
 

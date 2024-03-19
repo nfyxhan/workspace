@@ -14,13 +14,12 @@ RUN . ./env.sh && \
   yum update -y && \
   yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
   yum install -y \
-    curl net-tools wget bash-completion jq unzip fontconfig gettext expect \
+    curl net-tools wget bash-completion jq unzip fontconfig gettext \
     make gcc gcc-c++ kernel-devel \
     git openssh-server \
     vim \
     graphviz \
     nginx \
-    stress-ng \
     && \
   wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \
     https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
@@ -34,7 +33,8 @@ RUN . ./env.sh && \
     fc-cache -fv && \
     localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
     locale
-
+# expect 
+# stress-ng \
 # yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
 # yum install -y git
 ### config_git_vim

@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 #
+set -e 
 
 product_file=`find /usr/local/code-server*/lib/vscode/ -name product.json`
 

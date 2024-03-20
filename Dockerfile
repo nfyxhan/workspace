@@ -98,6 +98,8 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ENV GCC_VERSION=gcc-9.5.0
 RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/${GCC_VERSION}/${GCC_VERSION}.tar.gz | \
     tar -zx && \
+    yum install -y lbzip2 && \
+    yum clean all && \
     cd ${GCC_VERSION} && \
     ./contrib/download_prerequisites && \
     cd .. && \

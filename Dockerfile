@@ -101,10 +101,10 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 #       yum install devtoolset-9-libstdc++-devel -y 
 ### install_code_server
 ADD ./hack/replace-code-server-market.sh ./hack/
-ENV CODE_SERVER_VERSION=4.20.1
-# ENV CODE_SERVER_VERSION=4.16.1
+ADD ./hack/env-install-vscode.sh ./env-install-vscode.sh
 # ENV CODE_SERVER_VERSION=3.4.1
-RUN . ./env.sh && \ 
+RUN . ./env.sh && \
+    . ./env-install-vscode.sh && \
     rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm && \    # && \
     all='golang.go \
     mhutchie.git-graph \

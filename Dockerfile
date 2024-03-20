@@ -18,7 +18,6 @@ RUN . ./env.sh && \
     make gcc gcc-c++ \
     git openssh-server \
     vim \
-    graphviz \
     nginx \
     procps \
     && \
@@ -34,6 +33,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     # locale
 # expect kernel-devel 
 # stress-ng \
+# graphviz \
 # yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
 # yum install -y git
 #  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \

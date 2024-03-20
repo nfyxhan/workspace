@@ -1,5 +1,5 @@
-# FROM redhat/ubi8:8.9-1136
-FROM centos:7
+FROM redhat/ubi8:8.9-1136
+# FROM centos:7
 
 # ARG TARGETPLATFORM=linux/amd64
 
@@ -96,36 +96,17 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
   . ${HOME}/.bashrc && \
   nvm install ${NODEJS_VERSION}
 
-# ENV GCC_VERSION=gcc-9.5.0
-# RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/${GCC_VERSION}/${GCC_VERSION}.tar.gz | \
-#     tar -zx && \
-#     yum install -y lbzip2 && \
-#     yum clean all && \
-#     cd ${GCC_VERSION} && \
-#     ./contrib/download_prerequisites && \
-#     cd .. && \
-# 	  mkdir build && \
-# 	  cd build/ && \
-# 	  ../${GCC_VERSION}/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib && \
-# 	  make -j 8 && \
-# 	  make install && \
-# 	  cd .. && rm -rf ${GCC_VERSION} build
-#  yum groupinstall "Development Tools"
-#     5  ls lib64/libstdc++.so.6 -la
-#     6  yum install -y centos-release-scl
-#     7  yum search devtools-
-#     8  yum search devtools
-#     9  yum install devtoolset-9-libstdc++-devel
+#  yum groupinstall "Development Tools" -y
+#       yum install -y centos-release-scl
+#       yum install devtoolset-9-libstdc++-devel -y 
 ### install_code_server
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
-ENV CODE_SERVER_VERSION=4.16.1
+# ENV CODE_SERVER_VERSION=4.16.1
 # ENV CODE_SERVER_VERSION=4.13.0
 # ENV CODE_SERVER_VERSION=3.4.1
 RUN . ./env.sh && \ 
-    curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
-    tar -zx -C /usr/local/ && \
-    ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ 
+    rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm
     # && \
     # all='golang.go \
     # mhutchie.git-graph \

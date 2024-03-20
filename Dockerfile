@@ -1,6 +1,7 @@
-FROM redhat/ubi8:8.9-1136
+# FROM redhat/ubi8:8.9-1136
+FROM centos:7
 
-ARG TARGETPLATFORM=linux/amd64
+# ARG TARGETPLATFORM=linux/amd64
 
 ENV BASH_RC=/etc/bashrc
 
@@ -109,34 +110,39 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 # 	  make -j 8 && \
 # 	  make install && \
 # 	  cd .. && rm -rf ${GCC_VERSION} build
-
+#  yum groupinstall "Development Tools"
+#     5  ls lib64/libstdc++.so.6 -la
+#     6  yum install -y centos-release-scl
+#     7  yum search devtools-
+#     8  yum search devtools
+#     9  yum install devtoolset-9-libstdc++-devel
 ### install_code_server
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 ENV CODE_SERVER_VERSION=4.16.1
-ENV CODE_SERVER_VERSION=4.13.0
+# ENV CODE_SERVER_VERSION=4.13.0
 # ENV CODE_SERVER_VERSION=3.4.1
 RUN . ./env.sh && \ 
     curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \
     tar -zx -C /usr/local/ && \
     ln -sf /usr/local/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}/bin/code-server /usr/bin/ && \
-    all='golang.go \
-    mhutchie.git-graph \
-    waderyan.gitblame \
-    alphabotsec.vscode-eclipse-keybindings \
-    vscodevim.vim \
-    donjayamanne.githistory \
-    richie5um2.vscode-sort-json \
-    jsynowiec.vscode-insertdatestring \
-    SenseTime.raccoon \
-    balazs4.gitlab-pipeline-monitor \
-    EditorConfig.EditorConfig \
-    wmaurer.change-case \
-    oderwat.indent-rainbow \
-    vscode-icons-team.vscode-icons \
-    TaipaXu.github-trending \
-    Vue.volar' ; \
-    for i in $all ; do code-server --install-extension $i ; done
+    # all='golang.go \
+    # mhutchie.git-graph \
+    # waderyan.gitblame \
+    # alphabotsec.vscode-eclipse-keybindings \
+    # vscodevim.vim \
+    # donjayamanne.githistory \
+    # richie5um2.vscode-sort-json \
+    # jsynowiec.vscode-insertdatestring \
+    # SenseTime.raccoon \
+    # balazs4.gitlab-pipeline-monitor \
+    # EditorConfig.EditorConfig \
+    # wmaurer.change-case \
+    # oderwat.indent-rainbow \
+    # vscode-icons-team.vscode-icons \
+    # TaipaXu.github-trending \
+    # Vue.volar' ; \
+    # for i in $all ; do code-server --install-extension $i ; done
    # sh ./hack/replace-code-server-market.sh && \
 
 ADD ./hack/* ./hack/

@@ -95,6 +95,19 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
   . ${HOME}/.bashrc && \
   nvm install ${NODEJS_VERSION}
 
+ENV GCC_VERSION=gcc-9.5.0
+RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/${GCC_VERSION}/${GCC_VERSION}.tar.gz | \
+    tar -zx && \
+    cd ${GCC_VERSION} && \
+    ./contrib/download_prerequisites && \
+    cd .. && \
+	  mkdir build && \
+	  cd build/ && \
+	  ../${GCC_VERSION}/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib && \
+	  make -j 8 && \
+	  make install && \
+	  cd .. && rm -rf ${GCC_VERSION} build
+
 ### install_code_server
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
@@ -122,19 +135,6 @@ RUN . ./env.sh && \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
    # sh ./hack/replace-code-server-market.sh && \
-
-ENV GCC_VERSION=9.5.0
-RUN curl -L https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.gz | \
-    tar -zx && \
-    cd ${GCC_VERSION} && \
-    ./contrib/download_prerequisites && \
-    cd .. && \
-	  mkdir build && \
-	  cd build/ && \
-	  ../${GCC_VERSION}/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib && \
-	  make -j 8 && \
-	  make install && \
-	  cd .. && rm -rf ${GCC_VERSION} build
 
 ADD ./hack/* ./hack/
 

@@ -1,4 +1,4 @@
-FROM redhat/ubi9:9.3-1552
+FROM redhat/ubi8:8.9-1136
 
 ARG TARGETPLATFORM=linux/amd64
 
@@ -18,6 +18,7 @@ RUN . ./env.sh && \
     make gcc gcc-c++ \
     git openssh-server \
     vim \
+    graphviz \
     nginx \
     procps \
     && \
@@ -33,7 +34,6 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     # locale
 # expect kernel-devel 
 # stress-ng \
-# graphviz \
 # yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
 # yum install -y git
 #  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \
@@ -113,7 +113,8 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ### install_code_server
 ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
-ENV CODE_SERVER_VERSION=4.15.0
+ENV CODE_SERVER_VERSION=4.16.1
+ENV CODE_SERVER_VERSION=4.13.0
 # ENV CODE_SERVER_VERSION=3.4.1
 RUN . ./env.sh && \ 
     curl -L https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-linux-${RUN_PLATFORM}.tar.gz | \

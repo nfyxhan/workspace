@@ -1,4 +1,4 @@
-FROM redhat/ubi8:8.9-1136
+FROM redhat/ubi9:9.3-1552
 
 ARG TARGETPLATFORM=linux/amd64
 

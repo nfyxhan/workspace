@@ -2,7 +2,7 @@
 #
 set -e 
 
-product_file=`find /usr/local/code-server*/lib/vscode/ -name product.json`
+product_file=`find /usr/lib/code-server/lib/vscode/ -name product.json`
 
 temp_file=`mktemp /tmp/product.json.XXXXXXXXXXXXXX`
 cat $product_file | jq '(.extensionsGallery) |= 

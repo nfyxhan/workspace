@@ -106,6 +106,7 @@ ADD ./hack/replace-code-server-market.sh ./hack/
 ENV CODE_SERVER_VERSION=4.20.1
 RUN . ./env.sh && \
     rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm && \   
+    sh ./hack/replace-code-server-market.sh && \
     all='golang.go \
     mhutchie.git-graph \
     waderyan.gitblame \
@@ -123,7 +124,6 @@ RUN . ./env.sh && \
     TaipaXu.github-trending \
     Vue.volar' ; \
     for i in $all ; do code-server --install-extension $i ; done
-   # sh ./hack/replace-code-server-market.sh && \
 
 ADD ./hack/* ./hack/
 

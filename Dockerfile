@@ -103,6 +103,7 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 ADD ./hack/replace-code-server-market.sh ./hack/
 #ADD ./hack/env-install-vscode.sh ./env-install-vscode.sh
 # . ./env-install-vscode.sh && \
+ENV CODE_SERVER_VERSION=4.20.1
 RUN . ./env.sh && \
     rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm && \   
     all='golang.go \

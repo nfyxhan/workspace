@@ -24,5 +24,10 @@ all='golang.org/x/tools/cmd/goimports@v0.11.1 \
 go:
 GOBIN=$(shell which go)
 
+dev-tools:
+    yum groupinstall "Development Tools" -y
+    yum install -y centos-release-scl
+    yum install devtoolset-9-libstdc++-devel -y 
+
 go-tools:
 	for i in $(shell echo ${all}) ; do echo installing $$i ; $(GOBIN) install $$i ; done 

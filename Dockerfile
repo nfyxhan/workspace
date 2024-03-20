@@ -96,34 +96,30 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
   . ${HOME}/.bashrc && \
   nvm install ${NODEJS_VERSION}
 
-#  yum groupinstall "Development Tools" -y
-#       yum install -y centos-release-scl
-#       yum install devtoolset-9-libstdc++-devel -y 
 ### install_code_server
-ADD ./hack/replace-code-server-market.sh ./hack/
-#ADD ./hack/env-install-vscode.sh ./env-install-vscode.sh
-# . ./env-install-vscode.sh && \
 ENV CODE_SERVER_VERSION=4.20.1
 RUN . ./env.sh && \
     rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm && \   
-    sh ./hack/replace-code-server-market.sh && \
-    all='golang.go \
-    mhutchie.git-graph \
-    waderyan.gitblame \
-    alphabotsec.vscode-eclipse-keybindings \
-    vscodevim.vim \
-    donjayamanne.githistory \
-    richie5um2.vscode-sort-json \
-    jsynowiec.vscode-insertdatestring \
-    SenseTime.raccoon \
-    balazs4.gitlab-pipeline-monitor \
-    EditorConfig.EditorConfig \
-    wmaurer.change-case \
-    oderwat.indent-rainbow \
-    vscode-icons-team.vscode-icons \
-    TaipaXu.github-trending \
-    Vue.volar' ; \
-    for i in $all ; do code-server --install-extension $i ; done
+   
+ADD ./hack/replace-code-server-market.sh ./hack/
+# RUN sh ./hack/replace-code-server-market.sh && \
+#     all='golang.go \
+#     mhutchie.git-graph \
+#     waderyan.gitblame \
+#     alphabotsec.vscode-eclipse-keybindings \
+#     vscodevim.vim \
+#     donjayamanne.githistory \
+#     richie5um2.vscode-sort-json \
+#     jsynowiec.vscode-insertdatestring \
+#     SenseTime.raccoon \
+#     balazs4.gitlab-pipeline-monitor \
+#     EditorConfig.EditorConfig \
+#     wmaurer.change-case \
+#     oderwat.indent-rainbow \
+#     vscode-icons-team.vscode-icons \
+#     TaipaXu.github-trending \
+#     Vue.volar' ; \
+#     for i in $all ; do code-server --install-extension $i ; done
 
 ADD ./hack/* ./hack/
 

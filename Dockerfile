@@ -6,6 +6,7 @@ FROM redhat/ubi8:8.9-1136
 ENV BASH_RC=/etc/bashrc
 
 WORKDIR /home/workspace
+env WORKDIR /home/workspace 
 
 add ./hack/env.sh ./env.sh
 

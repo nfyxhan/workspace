@@ -36,6 +36,27 @@ RUN yum install -y glibc-locale-source glibc-langpack-en && \
   localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
   locale
 
+env TCL_VERSION=8.6.14
+env EXPECT_VERSION=5.45.4
+RUN . ./env.sh && \
+  curl -L https://jaist.dl.sourceforge.net/project/tcl/Tcl/${TCL_VERSION}/tcl${TCL_VERSION}-src.tar.gz | \
+  tar -zx && \
+  cd tcl${TCL_VERSION}/unix/ && \
+  ./configure --prefix=/usr/tcl --enable-shared && \
+  make && \
+  make install && \
+  cp tclUnixPort.h ../generic && \
+  cd ../.. && \
+    curl -L https://jaist.dl.sourceforge.net/project/expect/Expect/${EXPECT_VERSION}/expect${EXPECT_VERSION}.tar.gz | \
+  tar -zx && \
+  cd expect${EXPECT_VERSION} && \
+  ./configure --build=$(echo ${RUN_PLATFORM}| sed s'/64/'g)-linux --prefix=/usr/expect --with-tcl=/usr/tcl/lib --with-tclinclude=${WORKDIR}/tcl${TCL_VERSION}/generic && \
+  make && \
+  make install && \
+  ln -s /usr/tcl/bin/expect /usr/bin/expect && \
+  cd .. && rm -rf expect* tcl*
+
+
 # expect kernel-devel 
 # stress-ng \
 # yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
@@ -43,7 +64,7 @@ RUN yum install -y glibc-locale-source glibc-langpack-en && \
 #  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \
 #   https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   # yum update -y && \
-  
+
 ### config_git_vim
 ENV GIT_USER=nfyxhan
 ENV GIT_EMAIL=nfyxhan@163.com

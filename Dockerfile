@@ -25,14 +25,17 @@ RUN . ./env.sh && \
     && \
   yum clean all
 
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone && \
+RUN yum install -y glibc-locale-source glibc-langpack-en && \
+  yum clean all && \
+  ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+  echo "Asia/Shanghai" > /etc/timezone && \
   mkdir -p /usr/share/fonts/chinese/ && \
   wget -O /usr/share/fonts/chinese/SourceHanSansSC-Light.otf \
     https://raw.githubusercontent.com/adobe-fonts/source-han-sans/release/OTF/SimplifiedChinese/SourceHanSansSC-Light.otf && \
-    fc-cache -fv # && \
-    # localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
-    # locale
+  fc-cache -fv && \
+  localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
+  locale
+
 # expect kernel-devel 
 # stress-ng \
 # yum install https://packages.endpointdev.com/rhel/7/os/SRPMS/endpoint-repo-1.10-1.src.rpm -y && \
@@ -40,6 +43,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
 #  wget -O /etc/yum.repos.d/lbiaggi-vim80-ligatures-epel-7.repo \
 #   https://copr.fedorainfracloud.org/coprs/lbiaggi/vim80-ligatures/repo/epel-7/lbiaggi-vim80-ligatures-epel-7.repo && \
   # yum update -y && \
+  
 ### config_git_vim
 ENV GIT_USER=nfyxhan
 ENV GIT_EMAIL=nfyxhan@163.com

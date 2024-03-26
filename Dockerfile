@@ -51,7 +51,7 @@ RUN . ./env.sh && \
     curl -L https://jaist.dl.sourceforge.net/project/expect/Expect/${EXPECT_VERSION}/expect${EXPECT_VERSION}.tar.gz | \
   tar -zx && \
   cd expect${EXPECT_VERSION} && \
-  ./configure --build=$(echo -n ${RUN_PLATFORM}| sed s'/64//'g)-linux --prefix=/usr/expect --with-tcl=/usr/tcl/lib --with-tclinclude=${WORKDIR}/tcl${TCL_VERSION}/generic && \
+  ./configure --build=$(echo -n ${RUN_PLATFORM}| sed s'/arm64/arm/'g | sed s'/amd64/x86-64/'g)-linux --prefix=/usr/expect --with-tcl=/usr/tcl/lib --with-tclinclude=${WORKDIR}/tcl${TCL_VERSION}/generic && \
   make && \
   make install && \
   ln -s /usr/tcl/bin/expect /usr/bin/expect && \

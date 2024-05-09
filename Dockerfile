@@ -21,10 +21,17 @@ RUN . ./env.sh && \
     git openssh-server \
     vim diffutils \
     graphviz \
-    expect \
     nginx \
     procps \
-    && \
+    && \  
+  echo https://mirrors.aliyun.com/centos/8/BaseOS/${EXPECT_VERSION}/os/Packages/tcl-8.6.8-2.el8.${EXPECT_VERSION}.rpm | \
+    sed s'/arm64/aarch64/'g | \
+    sed s'/amd64/x86-64/'g | \
+    xargs rpm -iv && \
+  echo https://mirrors.aliyun.com/centos/8/BaseOS/${EXPECT_VERSION}/os/Packages/expect-5.45.4-5.el8.${EXPECT_VERSION}.rpm | \
+    sed s'/arm64/aarch64/'g | \
+    sed s'/amd64/x86-64/'g | \
+    xargs rpm -iv && \
   yum clean all
 
 RUN yum install -y glibc-locale-source glibc-langpack-en && \

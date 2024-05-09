@@ -21,6 +21,7 @@ RUN . ./env.sh && \
     git openssh-server \
     vim diffutils \
     graphviz \
+    expect \
     nginx \
     procps \
     && \
@@ -37,25 +38,25 @@ RUN yum install -y glibc-locale-source glibc-langpack-en && \
   localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8 && \
   locale
 
-env TCL_VERSION=8.6.14
-env EXPECT_VERSION=5.45.4
-RUN . ./env.sh && \
-  curl -L https://jaist.dl.sourceforge.net/project/tcl/Tcl/${TCL_VERSION}/tcl${TCL_VERSION}-src.tar.gz | \
-  tar -zx && \
-  cd tcl${TCL_VERSION}/unix/ && \
-  ./configure --prefix=/usr/tcl --enable-shared && \
-  make && \
-  make install && \
-  cp tclUnixPort.h ../generic && \
-  cd ../.. && \
-    curl -L https://jaist.dl.sourceforge.net/project/expect/Expect/${EXPECT_VERSION}/expect${EXPECT_VERSION}.tar.gz | \
-  tar -zx && \
-  cd expect${EXPECT_VERSION} && \
-  ./configure --build=$(echo -n ${RUN_PLATFORM}| sed s'/arm64/arm/'g | sed s'/amd64/x86-64/'g)-linux --prefix=/usr/expect --with-tcl=/usr/tcl/lib --with-tclinclude=${WORKDIR}/tcl${TCL_VERSION}/generic && \
-  make && \
-  make install && \
-  ln -s /usr/tcl/bin/expect /usr/bin/expect && \
-  cd .. && rm -rf expect* tcl*
+# env TCL_VERSION=8.6.14
+# env EXPECT_VERSION=5.45.4
+# RUN . ./env.sh && \
+#   curl -L https://jaist.dl.sourceforge.net/project/tcl/Tcl/${TCL_VERSION}/tcl${TCL_VERSION}-src.tar.gz | \
+#   tar -zx && \
+#   cd tcl${TCL_VERSION}/unix/ && \
+#   ./configure --prefix=/usr/tcl --enable-shared && \
+#   make && \
+#   make install && \
+#   cp tclUnixPort.h ../generic && \
+#   cd ../.. && \
+#     curl -L https://jaist.dl.sourceforge.net/project/expect/Expect/${EXPECT_VERSION}/expect${EXPECT_VERSION}.tar.gz | \
+#   tar -zx && \
+#   cd expect${EXPECT_VERSION} && \
+#   ./configure --build=$(echo -n ${RUN_PLATFORM}| sed s'/arm64/arm/'g | sed s'/amd64/x86-64/'g)-linux --prefix=/usr/expect --with-tcl=/usr/tcl/lib --with-tclinclude=${WORKDIR}/tcl${TCL_VERSION}/generic && \
+#   make && \
+#   make install && \
+#   ln -s /usr/tcl/bin/expect /usr/bin/expect && \
+#   cd .. && rm -rf expect* tcl*
 
 
 # expect kernel-devel 

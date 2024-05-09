@@ -19,7 +19,7 @@ RUN . ./env.sh && \
     curl net-tools wget bash-completion jq unzip fontconfig gettext \
     make gcc gcc-c++ \
     git openssh-server \
-    vim \
+    vim diffutils \
     graphviz \
     nginx \
     procps \

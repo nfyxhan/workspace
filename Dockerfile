@@ -14,7 +14,7 @@ add ./hack/env.sh ./env.sh
 ENV LANG=zh_CN.utf8
 RUN . ./env.sh && \
   yum update -y && \
-  yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+  yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
   yum install -y \
     curl net-tools wget bash-completion jq unzip fontconfig gettext \
     make gcc gcc-c++ \

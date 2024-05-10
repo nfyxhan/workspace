@@ -153,7 +153,7 @@ RUN sh ./hack/replace-code-server-market.sh && \
     vscode-icons-team.vscode-icons \
     TaipaXu.github-trending \
     Vue.volar' ; \
-    for i in $all ; do code-server --install-extension $i ; done
+    for i in $all ; do code-server --install-extension $i -vvv ; done
 
 ADD ./hack/* ./hack/
 

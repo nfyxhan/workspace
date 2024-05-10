@@ -24,11 +24,11 @@ RUN . ./env.sh && \
     nginx \
     procps \
     && \  
-  echo https://mirrors.aliyun.com/centos/8/BaseOS/${EXPECT_VERSION}/os/Packages/tcl-8.6.8-2.el8.${EXPECT_VERSION}.rpm | \
+  echo https://mirrors.aliyun.com/centos/8/BaseOS/${RUN_PLATFORM}/os/Packages/tcl-8.6.8-2.el8.${RUN_PLATFORM}.rpm | \
     sed s'/arm64/aarch64/'g | \
     sed s'/amd64/x86_64/'g | \
     xargs rpm -iv && \
-  echo https://mirrors.aliyun.com/centos/8/BaseOS/${EXPECT_VERSION}/os/Packages/expect-5.45.4-5.el8.${EXPECT_VERSION}.rpm | \
+  echo https://mirrors.aliyun.com/centos/8/BaseOS/${RUN_PLATFORM}/os/Packages/expect-5.45.4-5.el8.${RUN_PLATFORM}.rpm | \
     sed s'/arm64/aarch64/'g | \
     sed s'/amd64/x86_64/'g | \
     xargs rpm -iv && \

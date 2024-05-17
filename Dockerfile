@@ -23,6 +23,7 @@ RUN . ./env.sh && \
     graphviz \
     nginx \
     procps \
+    upx \
     && \  
   echo https://mirrors.aliyun.com/centos/8/BaseOS/${RUN_PLATFORM}/os/Packages/tcl-8.6.8-2.el8.${RUN_PLATFORM}.rpm | \
     sed s'/arm64/aarch64/'g | \

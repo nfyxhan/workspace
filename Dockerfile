@@ -133,7 +133,8 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
   nvm install ${NODEJS_VERSION}
 
 ### install_code_server
-ENV CODE_SERVER_VERSION=4.20.1
+#ENV CODE_SERVER_VERSION=4.20.1
+ENV CODE_SERVER_VERSION=4.93.1
 RUN . ./env.sh && \
     rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm
 

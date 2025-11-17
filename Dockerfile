@@ -99,7 +99,7 @@ RUN pwd && ls -la && \
   echo 'source <(gh completion bash)' >> ${BASH_RC}
 
 ### install_go
-ENV GO_VERSION=1.18.10
+ENV GO_VERSION=1.23.10
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
 RUN . ./env.sh && \ 
@@ -109,7 +109,7 @@ RUN . ./env.sh && \
     echo 'export PATH=$PATH:${GOPATH}/bin' >>  ${BASH_RC}
 
 ### install_kubectl_helm
-ENV KUBE_VERSION=v1.26.11
+ENV KUBE_VERSION=v1.32.10
 ENV KUBEBUILDER_VERSION=v3.12.0
 ENV HELM_VERSION=v3.6.3
 RUN . ./env.sh && \ 
@@ -134,7 +134,7 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/i
 
 ### install_code_server
 #ENV CODE_SERVER_VERSION=4.20.1
-ENV CODE_SERVER_VERSION=4.94.2-rc.1
+ENV CODE_SERVER_VERSION=4.105.1
 RUN . ./env.sh && \
     rpm -iv https://github.com/coder/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server-${CODE_SERVER_VERSION}-${RUN_PLATFORM}.rpm
 

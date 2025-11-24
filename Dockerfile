@@ -36,7 +36,8 @@ RUN . ./env.sh && \
     xargs rpm -iv && \
   yum clean all
 
-RUN yum install -y glibc-locale-source glibc-langpack-en && \
+RUN yum install -y glibc-locale-source glibc-langpack-en \
+  nss at-spi2-atk mesa-libgbm alsa-lib && \
   yum clean all && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
   echo "Asia/Shanghai" > /etc/timezone && \
